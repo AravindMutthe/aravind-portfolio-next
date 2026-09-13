@@ -1,0 +1,237 @@
+@import "tailwindcss";
+
+/* ---------- neon dark design tokens ---------- */
+:root {
+  --bg: #050509;
+  --bg2: #0a0a15;
+  --ink: #f4f4fa;
+  --text: #d9d9e6;
+  --muted: #9b9bb5;
+  --faint: #5c5c78;
+  --g1: #4d7cfe;
+  --g2: #8b5cf6;
+  --g3: #ec4899;
+  --g4: #22d3ee;
+  --grad: linear-gradient(135deg, #4d7cfe, #8b5cf6 48%, #ec4899);
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --spring: cubic-bezier(0.34, 1.45, 0.4, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--g2);
+  color: #fff;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #07070d;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--g1), var(--g3));
+  border-radius: 8px;
+}
+
+/* ---------- utilities ---------- */
+.grad-text {
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+/* gradient button */
+.btn-grad {
+  position: relative;
+  overflow: hidden;
+  background: var(--grad);
+  background-size: 150% 150%;
+  color: #fff;
+  box-shadow: 0 8px 28px rgba(139, 92, 246, 0.35);
+  transition: transform 0.32s var(--spring), box-shadow 0.32s var(--ease),
+    background-position 0.5s var(--ease);
+}
+.btn-grad::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -70%;
+  width: 45%;
+  height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.65s var(--ease);
+  pointer-events: none;
+}
+.btn-grad:hover {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 16px 42px rgba(139, 92, 246, 0.55);
+  background-position: 100% 50%;
+}
+.btn-grad:hover::after {
+  left: 135%;
+}
+.btn-grad:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-ghost-neon {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #fff;
+  backdrop-filter: blur(8px);
+  transition: transform 0.32s var(--spring), background 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+.btn-ghost-neon:hover {
+  transform: translateY(-3px) scale(1.03);
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.28);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* ---------- ambient orbs ---------- */
+.orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  opacity: 0.5;
+  pointer-events: none;
+  animation: drift 14s ease-in-out infinite alternate;
+}
+@keyframes drift {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(60px, -40px) scale(1.15);
+  }
+}
+
+/* ---------- ticker ---------- */
+.ticker-mask {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.ticker-track {
+  display: flex;
+  gap: 0.875rem;
+  width: max-content;
+  animation: tick 30s linear infinite;
+}
+.ticker-mask:hover .ticker-track {
+  animation-play-state: paused;
+}
+@keyframes tick {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ---------- mesh CTA ---------- */
+.mesh-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(500px 300px at 20% 20%, rgba(77, 124, 254, 0.35), transparent 70%),
+    radial-gradient(500px 320px at 80% 30%, rgba(236, 72, 153, 0.3), transparent 70%),
+    radial-gradient(600px 340px at 50% 100%, rgba(139, 92, 246, 0.35), transparent 70%);
+  animation: meshShift 12s ease-in-out infinite alternate;
+}
+@keyframes meshShift {
+  from {
+    transform: scale(1) translate(0, 0);
+  }
+  to {
+    transform: scale(1.12) translate(-20px, 14px);
+  }
+}
+
+/* ---------- Carbon form tuning (dark) ---------- */
+.carbon-form .cds--text-input,
+.carbon-form .cds--text-area,
+.carbon-form .cds--select-input {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+  color: #fff;
+}
+.carbon-form .cds--text-input:focus,
+.carbon-form .cds--text-area:focus,
+.carbon-form .cds--select-input:focus {
+  outline: 2px solid var(--g2);
+  outline-offset: -2px;
+}
+.carbon-form .cds--label {
+  color: var(--muted);
+}
+.carbon-form .cds--select-input option {
+  background: #0d0d17;
+  color: #fff;
+}
+.carbon-form .cds--form-item {
+  margin-bottom: 1.25rem;
+}
+
+/* ---------- poster glow ---------- */
+.poster-glow {
+  position: absolute;
+  inset: auto -20% -35% -20%;
+  height: 60%;
+  background: radial-gradient(ellipse at center, rgba(139, 92, 246, 0.35), transparent 70%);
+  filter: blur(40px);
+  pointer-events: none;
+}
+
+/* nav link underline */
+.navlink {
+  position: relative;
+  transition: color 0.25s;
+}
+.navlink::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: -4px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--grad);
+  box-shadow: 0 0 8px rgba(139, 92, 246, 0.8);
+  transition: right 0.32s var(--ease);
+}
+.navlink:hover::after,
+.navlink.active::after {
+  right: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orb,
+  .mesh-bg,
+  .ticker-track {
+    animation: none;
+  }
+  .btn-grad::after {
+    display: none;
+  }
+}
